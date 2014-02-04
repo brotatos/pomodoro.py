@@ -1,0 +1,14 @@
+#!/usr/bin/env python2
+import time
+import sys
+
+POMODORO_LENGTH = 25
+SHORT_BREAK = 5
+LONG_BREAK = 15
+
+current_time = POMODORO_LENGTH
+for minute in range(POMODORO_LENGTH + 1):
+    sys.stdout.write("\r" + str(current_time) + " minutes left")
+    sys.stdout.flush()
+    time.sleep(1)
+    current_time -= 1
