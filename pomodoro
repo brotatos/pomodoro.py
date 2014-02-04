@@ -3,7 +3,7 @@ import time
 import datetime
 import sys
 
-# Ints represent number of lengths.
+# Ints represent number of minutes.
 POMODORO_LENGTH = 25
 SHORT_BREAK = 5
 LONG_BREAK = 15
