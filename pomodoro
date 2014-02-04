@@ -52,8 +52,8 @@ class Pomodoro(object):
                 'time_left':     time_left
         }
 
-    # Currently, not updating the time left.
     def update_time_left(self, old_times):
+        old_times['current_time'] = datetime.datetime.now()
         time_left = old_times['end_time'] - old_times['current_time']
         time_left_in_seconds = time_left.total_seconds()
         old_times['time_left'] = time_left_in_seconds
