@@ -1,17 +1,31 @@
 #!/usr/bin/env python2
 import time
+import datetime
 import sys
 
+# Ints represent number of lengths.
 POMODORO_LENGTH = 25
 SHORT_BREAK = 5
 LONG_BREAK = 15
 
-current_time = POMODORO_LENGTH
-for minute in range(POMODORO_LENGTH + 1):
-    sys.stdout.write("\r" + str(current_time) + " minutes left")
-    sys.stdout.flush()
-    if current_time is 0:
-        # Play a sound file here.
-        print "\nDone!"
-    current_time -= 1
-    time.sleep(60)
+
+class Pomodoro(object):
+
+    def long_break(self):
+        current_time = datetime.datetime.now()
+        end_time = current_time + datetime.timedelta(seconds=10)
+        time_left = (end_time - current_time).total_seconds()
+        while time_left > 0:
+            time_left = (end_time - current_time).total_seconds()
+            sys.stdout.write("\r" + str(end_time - current_time)
+                             + " minutes left")
+            sys.stdout.flush()
+            current_time = datetime.datetime.now()
+            if time_left <= 0:
+                # Play a sound file here.
+                print "\nDone!"
+            time.sleep(1)
+
+
+pomodoro = Pomodoro()
+pomodoro.long_break()
