@@ -26,6 +26,46 @@ class Pomodoro(object):
                 print "\nDone!"
             time.sleep(1)
 
+    def short_break(self):
+        current_time = datetime.datetime.now()
+        end_time = current_time + datetime.timedelta(seconds=10)
+        time_left = (end_time - current_time).total_seconds()
+        while time_left > 0:
+            time_left = (end_time - current_time).total_seconds()
+            sys.stdout.write("\r" + str(end_time - current_time)
+                             + " minutes left")
+            sys.stdout.flush()
+            current_time = datetime.datetime.now()
+            if time_left <= 0:
+                # Play a sound file here.
+                print "\nDone!"
+            time.sleep(1)
+
+    def obtain_times(self, duration_in_minutes):
+        current_time = datetime.datetime.now()
+        end_time = current_time \
+                   + datetime.timedelta(minutes=duration_in_minutes)
+        time_left = (end_time - current_time).total_seconds()
+        return {
+                'current_time':  current_time,
+                'end_time':      end_time,
+                'time_left':     time_left
+        }
+
+    # Currently, not updating the time left.
+    def update_time_left(self, old_times):
+        time_left = old_times['end_time'] - old_times['current_time']
+        time_left_in_seconds = time_left.total_seconds()
+        old_times['time_left'] = time_left_in_seconds
+        return old_times
+
 
 pomodoro = Pomodoro()
-pomodoro.long_break()
+#pomodoro.long_break()
+
+a = pomodoro.obtain_times(5)
+
+print str(a)
+time.sleep(3)
+b = pomodoro.update_time_left(a)
+print str(b)
