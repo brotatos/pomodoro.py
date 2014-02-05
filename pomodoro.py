@@ -1,6 +1,6 @@
 #!/usr/bin/env python2
 import time
-import datetime
+from datetime import datetime, timedelta
 import sys
 
 
@@ -11,7 +11,7 @@ class PomodoroException(Exception):
 class Pomodoro(object):
 
     def __init__(self, current_time=None, end_time=None, time_left=None):
-        self.current_time = datetime.datetime.now()
+        self.current_time = datetime.now()
         self.end_time = None
         self.time_left = None
         # Constants represent number of minutes.
@@ -23,7 +23,7 @@ class Pomodoro(object):
         self.time_left = self.end_time - self.current_time
 
     def run_duration(self, number_of_minutes):
-        time_duration = datetime.timedelta(minutes=number_of_minutes)
+        time_duration = timedelta(minutes=number_of_minutes)
         self.end_time = self.current_time + time_duration
         self.calculate_time_left()
         self.countdown()
@@ -62,7 +62,7 @@ class Pomodoro(object):
         }
 
     def update_times(self, end_time=None):
-        self.current_time = datetime.datetime.now()
+        self.current_time = datetime.now()
         if self.end_time:
             self.calculate_time_left()
         elif end_time:
