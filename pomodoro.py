@@ -3,69 +3,58 @@ import time
 import datetime
 import sys
 
-# Ints represent number of minutes.
-POMODORO_LENGTH = 25
-SHORT_BREAK = 5
-LONG_BREAK = 15
+
+class PomodoroException(Exception):
+    pass
 
 
 class Pomodoro(object):
 
+    def __init__(self, current_time=None, end_time=None, time_left=None):
+        self.current_time = datetime.datetime.now()
+        self.end_time = None
+        self.time_left = None
+        # Ints represent number of minutes.
+        self.POMODORO_LENGTH = 25
+        self.SHORT_BREAK = 5
+        self.LONG_BREAK = 15
+
+    def calculate_time_left(self):
+        self.time_left = (self.end_time - self.current_time).total_seconds()
+
+    # need to turn into generic function
     def long_break(self):
-        current_time = datetime.datetime.now()
-        end_time = current_time + datetime.timedelta(seconds=10)
-        time_left = (end_time - current_time).total_seconds()
-        while time_left > 0:
-            time_left = (end_time - current_time).total_seconds()
-            sys.stdout.write("\r" + str(end_time - current_time)
-                             + " minutes left")
+        time_duration = datetime.timedelta(minutes=self.POMODORO_LENGTH)
+        self.end_time = self.current_time + time_duration
+        self.calculate_time_left()
+        while self.time_left > 0:
+            self.update_times()
+            sys.stdout.write("\r" + str(self.end_time - self.current_time))
             sys.stdout.flush()
-            current_time = datetime.datetime.now()
-            if time_left <= 0:
+            if self.time_left <= 0:
                 # Play a sound file here.
                 print "\nDone!"
             time.sleep(1)
 
-    def short_break(self):
-        current_time = datetime.datetime.now()
-        end_time = current_time + datetime.timedelta(seconds=10)
-        time_left = (end_time - current_time).total_seconds()
-        while time_left > 0:
-            time_left = (end_time - current_time).total_seconds()
-            sys.stdout.write("\r" + str(end_time - current_time)
-                             + " minutes left")
-            sys.stdout.flush()
-            current_time = datetime.datetime.now()
-            if time_left <= 0:
-                # Play a sound file here.
-                print "\nDone!"
-            time.sleep(1)
-
-    def obtain_times(self, duration_in_minutes):
-        current_time = datetime.datetime.now()
-        end_time = current_time \
-                   + datetime.timedelta(minutes=duration_in_minutes)
-        time_left = (end_time - current_time).total_seconds()
+    def get_times(self):
         return {
-                'current_time':  current_time,
-                'end_time':      end_time,
-                'time_left':     time_left
+            'current_time':  self.current_time,
+            'end_time':      self.end_time,
+            'time_left':     self.time_left
         }
 
-    def update_time_left(self, old_times):
-        old_times['current_time'] = datetime.datetime.now()
-        time_left = old_times['end_time'] - old_times['current_time']
-        time_left_in_seconds = time_left.total_seconds()
-        old_times['time_left'] = time_left_in_seconds
-        return old_times
+    def update_times(self, end_time=None):
+        self.current_time = datetime.datetime.now()
+        if self.end_time:
+            self.calculate_time_left()
+        elif end_time:
+            current_time_left = (end_time - self.current_time).total_seconds()
+            self.time_left = current_time_left
+        else:
+            raise PomodoroException("end_time was not specified.")
 
 
 pomodoro = Pomodoro()
-#pomodoro.long_break()
+pomodoro.long_break()
 
-a = pomodoro.obtain_times(5)
-
-print str(a)
-time.sleep(3)
-b = pomodoro.update_time_left(a)
-print str(b)
+print pomodoro.get_times()
