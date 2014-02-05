@@ -41,7 +41,7 @@ class Pomodoro(object):
     def alert_end_of_period(self):
         if self.time_left.total_seconds() <= 0:
             # Play a sound file here.
-            print "\nDone!"
+            print "\n\aDone!"
         else:
             time.sleep(1)
 
