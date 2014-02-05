@@ -26,22 +26,32 @@ class Pomodoro(object):
         time_duration = datetime.timedelta(minutes=number_of_minutes)
         self.end_time = self.current_time + time_duration
         self.calculate_time_left()
+        self.countdown()
+
+    def countdown(self):
         while self.time_left.total_seconds() > 0:
             self.update_times()
-            sys.stdout.write("\r" + str(self.end_time - self.current_time))
-            sys.stdout.flush()
-            if self.time_left.total_seconds() <= 0:
-                # Play a sound file here.
-                print "\nDone!"
+            self.print_time_left()
+            self.alert_end_of_period()
+
+    def print_time_left(self):
+        sys.stdout.write("\r" + str(self.end_time - self.current_time))
+        sys.stdout.flush()
+
+    def alert_end_of_period(self):
+        if self.time_left.total_seconds() <= 0:
+            # Play a sound file here.
+            print "\nDone!"
+        else:
             time.sleep(1)
 
-    def pomodoro(self):
+    def do_pomodoro(self):
         self.run_duration(number_of_minutes=self.POMODORO_LENGTH)
 
-    def long_break(self):
+    def take_long_break(self):
         self.run_duration(number_of_minutes=self.LONG_BREAK)
 
-    def short_break(self):
+    def take_short_break(self):
         self.run_duration(number_of_minutes=self.SHORT_BREAK)
 
     def get_times(self):
