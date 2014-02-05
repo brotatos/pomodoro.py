@@ -14,7 +14,7 @@ class Pomodoro(object):
         self.current_time = datetime.datetime.now()
         self.end_time = None
         self.time_left = None
-        # Ints represent number of minutes.
+        # Constants represent number of minutes.
         self.POMODORO_LENGTH = 25
         self.SHORT_BREAK = 5
         self.LONG_BREAK = 15
