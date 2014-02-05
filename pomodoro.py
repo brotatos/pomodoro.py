@@ -20,18 +20,18 @@ class Pomodoro(object):
         self.LONG_BREAK = 15
 
     def calculate_time_left(self):
-        self.time_left = (self.end_time - self.current_time).total_seconds()
+        self.time_left = self.end_time - self.current_time
 
     # need to turn into generic function
     def long_break(self):
         time_duration = datetime.timedelta(minutes=self.POMODORO_LENGTH)
         self.end_time = self.current_time + time_duration
         self.calculate_time_left()
-        while self.time_left > 0:
+        while self.time_left.total_seconds() > 0:
             self.update_times()
             sys.stdout.write("\r" + str(self.end_time - self.current_time))
             sys.stdout.flush()
-            if self.time_left <= 0:
+            if self.time_left.total_seconds() <= 0:
                 # Play a sound file here.
                 print "\nDone!"
             time.sleep(1)
@@ -48,8 +48,7 @@ class Pomodoro(object):
         if self.end_time:
             self.calculate_time_left()
         elif end_time:
-            current_time_left = (end_time - self.current_time).total_seconds()
-            self.time_left = current_time_left
+            self.time_left = end_time - current_time_left
         else:
             raise PomodoroException("end_time was not specified.")
 
