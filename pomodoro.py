@@ -35,6 +35,15 @@ class Pomodoro(object):
                 print "\nDone!"
             time.sleep(1)
 
+    def pomodoro(self):
+        self.run_duration(number_of_minutes=self.POMODORO_LENGTH)
+
+    def long_break(self):
+        self.run_duration(number_of_minutes=self.LONG_BREAK)
+
+    def short_break(self):
+        self.run_duration(number_of_minutes=self.SHORT_BREAK)
+
     def get_times(self):
         return {
             'current_time':  self.current_time,
