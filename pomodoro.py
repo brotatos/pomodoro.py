@@ -22,9 +22,8 @@ class Pomodoro(object):
     def calculate_time_left(self):
         self.time_left = (self.end_time - self.current_time).total_seconds()
 
-    # need to turn into generic function
-    def long_break(self):
-        time_duration = datetime.timedelta(minutes=self.POMODORO_LENGTH)
+    def run_duration(self, number_of_minutes):
+        time_duration = datetime.timedelta(minutes=number_of_minutes)
         self.end_time = self.current_time + time_duration
         self.calculate_time_left()
         while self.time_left > 0:
