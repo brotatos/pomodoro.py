@@ -69,9 +69,3 @@ class Pomodoro(object):
             self.time_left = end_time - self.current_time
         else:
             raise PomodoroException("end_time was not specified.")
-
-
-pomodoro = Pomodoro()
-pomodoro.take_short_break()
-
-print(pomodoro.get_times())
