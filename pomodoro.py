@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 import time
 from datetime import datetime, timedelta
 import sys
@@ -41,7 +41,7 @@ class Pomodoro(object):
     def alert_end_of_period(self):
         if self.time_left.total_seconds() <= 0:
             # Play a sound file here.
-            print "\n\aDone!"
+            print("\n\aDone!")
         else:
             time.sleep(1)
 
@@ -74,4 +74,4 @@ class Pomodoro(object):
 pomodoro = Pomodoro()
 pomodoro.take_short_break()
 
-print pomodoro.get_times()
+print(pomodoro.get_times())
