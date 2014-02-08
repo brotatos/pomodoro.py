@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 from time import sleep
-from math import floor
 from datetime import datetime, timedelta
 import sys
 
@@ -30,30 +29,32 @@ class Pomodoro(object):
         self.run_duration(number_of_minutes=self.SHORT_BREAK)
 
     def run_duration(self, number_of_minutes):
-        time_duration = timedelta(minutes=number_of_minutes)
+        time_duration = timedelta(seconds=number_of_minutes)
         self.update_current_time()
         self.end_time = self.current_time + time_duration
         self.countdown()
 
     def countdown(self):
         self.update_time_left()
-        while self.time_left.total_seconds() > 0:
+        while self.any_time_left():
             self.print_time_left()
             self.alert_end_of_period()
 
     def print_time_left(self):
-        if self.time_left.total_seconds() > 0:
-            self.update_current_time()
-            sys.stdout.write("\r" + str(self.end_time - self.current_time))
+        if self.any_time_left():
+            sys.stdout.write("\r" + str(self.time_left))
             sys.stdout.flush()
 
     def alert_end_of_period(self):
         self.update_times()
-        if self.time_left.total_seconds() <= 0:
+        if not self.any_time_left():
             # Play a sound file here.
             print("\n\aDone!")
         else:
             sleep(1)
+
+    def any_time_left(self):
+        return self.time_left.days >= 0
 
     def update_times(self, end_time=None):
         self.update_current_time()
