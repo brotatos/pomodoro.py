@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from time import sleep
 from datetime import datetime, timedelta
-import sys
+from sys import stdout
 
 
 class PomodoroException(Exception):
@@ -42,8 +42,8 @@ class Pomodoro(object):
 
     def _print_time_left(self):
         if self._any_time_left():
-            sys.stdout.write("\r" + str(self.time_left))
-            sys.stdout.flush()
+            stdout.write("\r" + str(self.time_left))
+            stdout.flush()
 
     def _alert_end_of_period(self):
         self._update_times()

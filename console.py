@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import sys
+from sys import exit
 from pomodoro import Pomodoro
 
 
@@ -11,7 +11,7 @@ class Console(object):
             'p': self.pomodoro.do_pomodoro,
             'l': self.pomodoro.take_long_break,
             's': self.pomodoro.take_short_break,
-            'q': sys.exit
+            'q': exit
         }
         self.question = "(p)omodoro, (l)ong break, (s)hort break, (q)uit"
         self.correction = "Type p, l, or s to select our choice."
