@@ -7,24 +7,26 @@ class Console(object):
 
     def __init__(self):
         self.pomodoro = Pomodoro()
+        self.commands = {
+            'p': self.pomodoro.do_pomodoro,
+            'l': self.pomodoro.take_long_break,
+            's': self.pomodoro.take_short_break,
+            'q': sys.exit
+        }
+        self.question = "(p)omodoro, (l)ong break, (s)hort break, (q)uit"
+        self.correction = "Type p, l, or s to select our choice."
 
     def ask_question(self):
         while True:
-            print("(p)omodoro, (l)ong break, (s)hort break, (q)uit")
+            print(self.question)
             response = input("> ")
             self.do_pomodoro_action(response)
 
     def do_pomodoro_action(self, letter):
-        if letter == 'p':
-            self.pomodoro.do_pomodoro()
-        elif letter == 'l':
-            self.pomodoro.take_long_break()
-        elif letter == 's':
-            self.pomodoro.take_short_break()
-        elif letter == 'q':
-            sys.exit(0)
+        if letter in self.commands.keys():
+            self.commands[letter]()
         else:
-            print("Type p, l, or s to select our choice.")
+            print(self.correction)
             self.ask_question()
 
 
