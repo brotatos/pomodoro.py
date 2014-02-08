@@ -28,7 +28,3 @@ class Console(object):
         else:
             print(self.correction)
             self.ask_question()
-
-
-console = Console()
-console.ask_question()
