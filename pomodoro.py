@@ -20,55 +20,55 @@ class Pomodoro(object):
         self.LONG_BREAK = 15
 
     def do_pomodoro(self):
-        self.run_duration(number_of_minutes=self.POMODORO_LENGTH)
+        self._run_duration(number_of_minutes=self.POMODORO_LENGTH)
 
     def take_long_break(self):
-        self.run_duration(number_of_minutes=self.LONG_BREAK)
+        self._run_duration(number_of_minutes=self.LONG_BREAK)
 
     def take_short_break(self):
-        self.run_duration(number_of_minutes=self.SHORT_BREAK)
+        self._run_duration(number_of_minutes=self.SHORT_BREAK)
 
-    def run_duration(self, number_of_minutes):
-        time_duration = timedelta(seconds=number_of_minutes)
-        self.update_current_time()
+    def _run_duration(self, number_of_minutes):
+        time_duration = timedelta(minutes=number_of_minutes)
+        self._update_current_time()
         self.end_time = self.current_time + time_duration
-        self.countdown()
+        self._countdown()
 
-    def countdown(self):
-        self.update_time_left()
-        while self.any_time_left():
-            self.print_time_left()
-            self.alert_end_of_period()
+    def _countdown(self):
+        self._update_time_left()
+        while self._any_time_left():
+            self._print_time_left()
+            self._alert_end_of_period()
 
-    def print_time_left(self):
-        if self.any_time_left():
+    def _print_time_left(self):
+        if self._any_time_left():
             sys.stdout.write("\r" + str(self.time_left))
             sys.stdout.flush()
 
-    def alert_end_of_period(self):
-        self.update_times()
-        if not self.any_time_left():
+    def _alert_end_of_period(self):
+        self._update_times()
+        if not self._any_time_left():
             # Play a sound file here.
             print("\n\aDone!")
         else:
             sleep(1)
 
-    def any_time_left(self):
+    def _any_time_left(self):
         return self.time_left.days >= 0
 
-    def update_times(self, end_time=None):
-        self.update_current_time()
-        self.update_time_left()
+    def _update_times(self, end_time=None):
+        self._update_current_time()
+        self._update_time_left()
 
-    def update_current_time(self):
+    def _update_current_time(self):
         self.current_time = datetime.now()
 
-    def calculate_time_left(self):
+    def _calculate_time_left(self):
         self.time_left = self.end_time - self.current_time
 
-    def update_time_left(self, end_time=None):
+    def _update_time_left(self, end_time=None):
         if self.end_time:
-            self.calculate_time_left()
+            self._calculate_time_left()
         elif end_time:
             self.time_left = end_time - self.current_time
         else:
