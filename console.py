@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 from sys import exit
 from pomodoro import Pomodoro
 
@@ -19,7 +18,7 @@ class Console(object):
     def ask_question(self):
         while True:
             print(self.question)
-            response = input("> ")
+            response = raw_input("> ")
             self.do_pomodoro_action(response)
 
     def do_pomodoro_action(self, letter):

@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 from time import sleep
 from datetime import datetime, timedelta
 from sys import stdout
